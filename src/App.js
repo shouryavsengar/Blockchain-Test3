@@ -21,6 +21,10 @@ function App() {
     }
   };
 
+  const refreshBlockchain = () => {
+    window.location.reload();
+  };
+
   if (loading) {
     return (
       <div className="app-loading">
@@ -44,6 +48,7 @@ function App() {
           <div className="left-panel">
             <StatsPanel stats={stats} onMine={handleMine} />
             <TransactionForm onTransactionAdded={refresh} />
+           
           </div>
 
           <div className="right-panel">

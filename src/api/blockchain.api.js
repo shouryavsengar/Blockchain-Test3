@@ -1,5 +1,6 @@
 import client from './client';
 import ENDPOINTS from './endpoints';
+import axios from 'axios';
 
 export const fetchChain = () => client.get(ENDPOINTS.CHAIN);
 
@@ -13,8 +14,14 @@ export const fetchPendingTransactions = () =>
 export const fetchAllTransactions = () =>
   client.get(ENDPOINTS.TRANSACTIONS_ALL);
 
-export const addTransaction = (fromAddress, toAddress, amount) =>
-  client.post(ENDPOINTS.TRANSACTIONS, { fromAddress, toAddress, amount });
+  export const addTransaction = (fromAddress, toAddress, amount, privateKey) => {
+    return axios.post('/api/transactions', {
+      fromAddress,
+      toAddress,
+      amount,
+      privateKey
+    });
+  };
 
 export const mineBlock = (miningRewardAddress = 'miner1') =>
   client.post(ENDPOINTS.MINE, { miningRewardAddress });

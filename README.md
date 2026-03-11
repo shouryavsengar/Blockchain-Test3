@@ -239,3 +239,49 @@ PORT=3003 npm run dev
 ## License
 
 MIT — for learning and assessment purposes.
+
+
+## Changes
+
+### 1. Cryptographic Wallet System
+
+Implemented a real wallet system using **secp256k1 elliptic curve cryptography**.
+
+**Backend**
+- Added endpoint `POST /api/wallets`
+- Generates a wallet key pair using Node.js `crypto.generateKeyPairSync`
+- Returns:
+  - `publicKey`
+  - `privateKey`
+  - `address` (derived wallet address)
+
+**Transaction Security**
+- Implemented `Transaction.signTransaction(signingKey)`
+- Transactions are signed using the sender's private key
+- `Transaction.isValid()` verifies that a transaction contains a valid signature
+- `Blockchain.addTransaction()` rejects unsigned transactions
+
+**Frontend**
+- Created a unified **Wallet & Transaction component**
+- Users can:
+  - Generate a new wallet
+  - View wallet address and public key
+  - Check wallet balance
+  - Send transactions to another wallet
+
+Private keys are stored only in **local component state (client-side vault)** and are never sent back to the server except for signing the transaction.
+
+---
+
+### 2. Blockchain Persistence
+
+Implemented persistent blockchain storage.
+
+Created `services/persistence.service.js` containing:
+
+- `save(blockchain)` → writes blockchain state to disk
+- `load()` → restores blockchain state on server startup
+- `clear()` → removes persisted state (for testing)
+
+The blockchain state is stored in:
+
