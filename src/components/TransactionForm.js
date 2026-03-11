@@ -290,6 +290,7 @@ const TransactionForm = ({ onTransactionAdded }) => {
           <input
             name="fromAddress"
             value={formData.fromAddress}
+            placeholder="From wallet address"
             readOnly
           />
         </div>

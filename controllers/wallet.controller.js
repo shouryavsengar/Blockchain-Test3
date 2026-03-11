@@ -1,5 +1,6 @@
 const crypto = require("crypto");
 const { sendSuccess } = require("../utils/response");
+const logger = require("../utils/logger");
 
 exports.createWallet = (req, res) => {
 
@@ -21,6 +22,8 @@ exports.createWallet = (req, res) => {
     .update(publicKey)
     .digest("hex")
     .slice(0, 40);   // shorter address
+
+  logger.info('New wallet generated: ${address}');
 
   return sendSuccess(res, {
     address,
