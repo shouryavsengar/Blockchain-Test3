@@ -285,3 +285,31 @@ Created `services/persistence.service.js` containing:
 
 The blockchain state is stored in:
 
+`blockchain.json`
+
+This file stores the serialized blockchain data including the chain and pending transactions.
+
+---
+
+### Development Note
+
+When a new wallet is generated it starts with **zero balance**.  
+For development and testing purposes, the system currently **does not enforce a balance validation on the sender address when submitting a transaction**.
+
+This allows the complete transaction workflow to be demonstrated:
+
+Wallet Creation → Transaction Signing → Add to Pending Transactions → Mining
+
+Without this relaxation, newly created wallets would not be able to submit any transactions because they initially have no funds.
+
+In a production-ready blockchain system, the following validation would normally be implemented:
+
+- Verify that the sender (`fromAddress`) has sufficient balance before accepting a transaction.
+- Reject transactions where the amount exceeds the available balance.
+- Prevent potential double-spending scenarios.
+
+This validation can be added inside `Blockchain.addTransaction()` by checking the sender balance using:
+
+`blockchain.getBalanceOfAddress(fromAddress)`
+
+before pushing the transaction into the pending transaction pool.
